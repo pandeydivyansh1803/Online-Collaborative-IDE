@@ -1,42 +1,107 @@
-#root {
-  max-width: 1280px;
+.homepagewrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  height: 100vh;
+}
+
+.formwrapper{
+  background: #282a36;
+  padding: 20px;
+  border-radius: 20px;
+  width: 400px;
+  max-width: 90%;
+  border: solid 2px #EF00DE;
+}
+
+footer{
+  position: fixed;
+  bottom: 0;
+}
+
+footer a{
+  color: #EF00DE;
+}
+footer a:hover{
+  color: #A239EB;
+}
+
+.inputwrapper{
+  display: flex;
+  flex-direction: column;
+}
+
+.heading{
+  margin-bottom: 20px;
+  margin-top: 0;;
+}
+
+.logo{
+  width: 125px;
+}
+
+.inputbox{
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  margin-bottom: 14px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.btn{
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.joinBtn{
+  background: #EF00DE;
+  font-weight: bold;
+}
+
+.joinBtn:hover{
+  background: #A239EB;
+}
+
+.newroom{
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  margin-top: 20px;
+  
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.createnewBtn{
+  color: #EF00DE;
+  text-decoration: none;
+  border-bottom: 1px solid #EF00DE;
+  transition: all 0.3s ease-in-out;
+  
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.createnewBtn:hover{
+  color: #A239EB;
+  border-color: #A239EB;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
 
-.card {
-  padding: 2em;
-}
 
-.read-the-docs {
-  color: #888;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
