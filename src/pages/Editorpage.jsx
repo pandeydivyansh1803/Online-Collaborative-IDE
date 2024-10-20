@@ -76,10 +76,48 @@ const Editorpage = () => {
             )
         };
         init();
+        return () => {
+            socketRef.current.disconnect();
+            socketRef.current.off(ACTIONS.JOINED);
+            socketRef.current.off(ACTIONS.DISCONNECTED);
+        }
     },[]);
 
+    async function copyRoomId(){
+        try{
+            await navigator.clipboard.writeText(roomId);
+            toast.success("Room ID copied to your clipboard",{
+                style:{
+                    border: '2px solid #EF00DE',
+                    padding: '16px',
+                    color: 'white',
+                    background: '#282a36'
+                },
+                iconTheme: {
+                    primary: 'green',
+                    secondary: 'white',
+                },
+            })
+        }catch(err){
+            toast.error("Could not copy the room ID",{
+                style:{
+                    border: '2px solid #EF00DE',
+                    padding: '16px',
+                    color: 'white',
+                    background: '#282a36'
+                },
+                iconTheme: {
+                    primary: 'red',
+                    secondary: 'white',
+                },
+            })
+            console.log(err);
+        }
+    }
 
-
+    function leaveRoom(){
+        reactNavigator('/');
+    }
 
     if(!location.state){
         return <Navigate to="/"/>;  
@@ -105,11 +143,14 @@ const Editorpage = () => {
                         ))}
                     </div>
                 </div>
-                <button className="btn copyBtn">Copy Room ID</button>
-                <button className="btn leaveBtn">Leave Room</button>
+                <button className="btn copyBtn" onClick={copyRoomId}>Copy Room ID</button>
+                <button className="btn leaveBtn" onClick={leaveRoom}>Leave Room</button>
             </div>
             <div className="editorwrapper">
-                <Editor></Editor>
+                <Editor 
+                socketRef = {socketRef}
+                roomId = {roomId}>
+                </Editor>
             </div>
         </div>
     );
