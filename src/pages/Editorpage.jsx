@@ -11,6 +11,7 @@ const Editorpage = () => {
     const [clients, setClients] = useState([])
 
     const socketRef = useRef(null);
+    const codeRef = useRef(null);
     const location = useLocation();
     const { roomId } = useParams();
     const reactNavigator = useNavigate();
@@ -51,6 +52,11 @@ const Editorpage = () => {
                     console.log(`${username} joined`);
                 }
                 setClients(clients);
+                socketRef.current.emit(ACTIONS.SYNC_CODE, {
+                    code: codeRef.current,
+                    socketId
+
+                });
             });
 
             //listening for disconnected
@@ -149,7 +155,8 @@ const Editorpage = () => {
             <div className="editorwrapper">
                 <Editor 
                 socketRef = {socketRef}
-                roomId = {roomId}>
+                roomId = {roomId}
+                onCodeChange = {(code) => {codeRef.current = code}}>
                 </Editor>
             </div>
         </div>
