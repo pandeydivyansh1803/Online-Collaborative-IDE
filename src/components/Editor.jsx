@@ -1,43 +1,26 @@
-import React, { useState } from "react";
-import Client from "../components/Client";
-import Editor from "../components/Editor";
-
-const Editorpage = () => {
-    const [clients, setClients] = useState([
-        {socketId: 1, username: "Aaditya T"},
-        {socketId: 2, username: "Momo Mami"},
-        {socketId: 3, username: "Sexy Sucks"}
-    ])
+import React, { useEffect } from "react";
+import Codemirror from 'codemirror';
+import "codemirror/lib/codemirror.css"
+import "codemirror/mode/javascript/javascript";
+import "codemirror/theme/dracula.css";
+import "codemirror/addon/edit/closetag";
+import "codemirror/addon/edit/closebrackets";
 
 
-    return (
-        <div className="mainwrapper">
-            <div className="sidepanel">
-                <div className="sidepanel-inner">
-                    <div className="logo2">
-                        <img src="/codev.png" 
-                        className="logo2img" 
-                        alt="logo" 
-                        />
-                    </div>
-                    <h3>Connected:</h3>
-                    <div className="clientList">
-                        {clients.map((client) => (
-                            <Client 
-                                key = {client.socketId}
-                                username = {client.username}>
-                            </Client>
-                        ))}
-                    </div>
-                </div>
-                <button className="btn copyBtn">Copy Room ID</button>
-                <button className="btn leaveBtn">Leave Room</button>
-            </div>
-            <div className="editorwrapper">
-                <Editor></Editor>
-            </div>
-        </div>
-    );
+const Editor = () => {
+    useEffect(() => {
+        async function init(){
+            Codemirror.fromTextArea(document.getElementById("realtimeeditor"),{
+                mode: { name: 'javascript', json: true},
+                theme: "dracula",
+                autoCloseTags: true,
+                autoCloseBrackets: true,
+                lineNumbers: true
+            });
+        }
+        init();
+    }, [])
+    return <textarea id="realtimeeditor"></textarea>
 }
 
-export default Editorpage;
+export default Editor;
