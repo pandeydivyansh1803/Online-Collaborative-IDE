@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 
 
 const Editorpage = () => {
+    const [clients, setClients] = useState([])
+
     const socketRef = useRef(null);
     const location = useLocation();
     const { roomId } = useParams();
@@ -29,15 +31,55 @@ const Editorpage = () => {
                 roomId,
                 username: location.state?.username
             })
+
+            // listening for joined event
+            socketRef.current.on(ACTIONS.JOINED,
+            ({ clients, username, socketId }) => {
+                if(username !== location.state?.username){
+                    toast.success(`${username} joined the room`,{
+                        style:{
+                            border: '2px solid #EF00DE',
+                            padding: '16px',
+                            color: 'white',
+                            background: '#282a36'
+                        },
+                        iconTheme: {
+                            primary: 'green',
+                            secondary: 'white',
+                        },
+                    });
+                    console.log(`${username} joined`);
+                }
+                setClients(clients);
+            });
+
+            //listening for disconnected
+            socketRef.current.on(
+                ACTIONS.DISCONNECTED,
+                ({socketId, username}) => {
+                    toast.success(`${username} left the room`,{
+                        style:{
+                            border: '2px solid #EF00DE',
+                            padding: '16px',
+                            color: 'white',
+                            background: '#282a36'
+                        },
+                        iconTheme: {
+                            primary: 'green',
+                            secondary: 'white',
+                        },
+                    });
+                    setClients((prev) => {
+                        return prev.filter((client) => client.socketId != socketId);
+                    })
+                }
+            )
         };
         init();
     },[]);
 
 
-    const [clients, setClients] = useState([
-        {socketId: 1, username: "Aaditya T"},
-        {socketId: 2, username: "Momo Mami"},
-    ])
+
 
     if(!location.state){
         return <Navigate to="/"/>;  
